@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:showcase/drawer.dart';
-import 'package:showcase/notifiers/countnotifier.dart';
+import 'package:showcase/notifiers/intnotifier.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({Key key, this.title}) : super(key: key);
   final String title;
-  static final countManager = StateNotifierProvider((ref) => CountNotifier(0));
+  static final countManager = StateNotifierProvider((ref) => IntNotifier(0));
 
   @override
   Widget build(BuildContext context) {
