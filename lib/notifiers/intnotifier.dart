@@ -1,7 +1,7 @@
-import 'package:state_notifier/state_notifier.dart';
+import 'package:showcase/notifiers/_estatenotifier.dart';
 
-class IntNotifier extends StateNotifier<int> {
-  IntNotifier(int count) : super(count);
-  void increment() => state++;
-  void reset() => state = 0;
+class IntNotifier extends EStateNotifier<int> {
+  IntNotifier({int state = 0}) : super(state);
+  int increment() => state++;
+  int decrement() => state--;
 }

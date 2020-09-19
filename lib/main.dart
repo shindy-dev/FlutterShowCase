@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:showcase/notifiers/booleanNotifier.dart';
+import 'package:showcase/notifiers/booleannotifier.dart';
 import 'package:showcase/notifiers/colornotifier.dart';
 import 'package:showcase/pages/pages.dart';
 import 'package:showcase/themes/themes.dart';
@@ -10,28 +10,31 @@ void main() => runApp(ProviderScope(child: ShowCaseApp()));
 
 final isDarkProvider = StateNotifierProvider((ref) => BooleanNotifier());
 final osDarkProvider = StateNotifierProvider((ref) => BooleanNotifier());
-final primaryColorProvider = StateNotifierProvider((ref) => ColorNotifier());
+final primaryColorProvider =
+    StateNotifierProvider((ref) => MaterialColorNotifier());
 
 class ShowCaseApp extends StatefulWidget {
   ShowCaseApp({Key key, this.title}) : super(key: key);
   final title;
   @override
-  _ShowCaseConfig createState() => _ShowCaseConfig();
+  _ShowCaseConfig createState() => _ShowCaseConfig(title: title);
 }
 
 class _ShowCaseConfig extends State<ShowCaseApp> {
+  _ShowCaseConfig({title}) : this._title = title ?? "Flutter App";
+  final String _title;
+
   Future<void> initConfig() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     final bool _osDark = prefs.getBool('osDark') ?? false;
     context
         .read(isDarkProvider)
-        .toggle(_osDark ? false : prefs.getBool('isDark') ?? false);
-    context.read(osDarkProvider).toggle(_osDark);
+        .setState(_osDark ? false : prefs.getBool('isDark') ?? false);
+    context.read(osDarkProvider).setState(_osDark);
 
     Colors.primaries.forEach((element) {
       if (element.value == prefs.getInt('primaryColor'))
-        context.read(primaryColorProvider).changeColor(element ?? Colors.blue);
+        context.read(primaryColorProvider).setState(element ?? Colors.blue);
     });
   }
 
@@ -45,7 +48,7 @@ class _ShowCaseConfig extends State<ShowCaseApp> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, watch, widget) => MaterialApp(
-        title: 'Show Case',
+        title: _title,
         theme: (!watch(osDarkProvider.state) && watch(isDarkProvider.state))
             ? ShowCaseTheme.dark(watch(primaryColorProvider.state))
             : ShowCaseTheme.light(watch(primaryColorProvider.state)),
@@ -54,7 +57,7 @@ class _ShowCaseConfig extends State<ShowCaseApp> {
             : null,
         initialRoute: '/',
         routes: {
-          '/': (context) => MainPage(title: 'Show Case'),
+          '/': (context) => MainPage(title: _title),
           '/buttons': (context) => ButtonsPage(title: 'Bottuns'),
           '/settings': (context) => SettinsPage(title: 'Settings')
         },

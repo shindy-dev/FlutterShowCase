@@ -19,7 +19,7 @@ class ShowCaseTheme {
   });
 
   static ThemeData _getTheme(Color color, {bool isDark = false}) {
-    final ThemeData themeData = (isDark ? ThemeData.dark() : ThemeData.light());
+    final ThemeData themeData = isDark ? ThemeData.dark() : ThemeData.light();
     return themeData.copyWith(
       primaryColor: color,
       accentColor: color,
@@ -29,16 +29,21 @@ class ShowCaseTheme {
         backgroundColor: color,
         foregroundColor: Colors.white,
       ),
+      toggleButtonsTheme: ToggleButtonsThemeData().copyWith(
+        selectedColor: color,
+        disabledColor: isDark ? Colors.grey.shade300 : Colors.grey.shade700,
+      ),
       buttonTheme: ButtonThemeData(
-        textTheme: ButtonTextTheme.accent,
         colorScheme: themeData.colorScheme.copyWith(
           primary: color,
-          secondary: Colors.white,
+          background: color,
         ),
       ),
       pageTransitionsTheme: _pageTransitionsTheme,
       dividerColor: color,
-      iconTheme: IconThemeData(color: Colors.white),
+      iconTheme: IconThemeData(
+        color: isDark ? Colors.grey.shade300 : Colors.grey.shade700,
+      ),
     );
   }
 

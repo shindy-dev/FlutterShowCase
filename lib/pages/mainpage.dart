@@ -6,7 +6,8 @@ import 'package:showcase/notifiers/intnotifier.dart';
 class MainPage extends StatelessWidget {
   MainPage({Key key, this.title}) : super(key: key);
   final String title;
-  static final countManager = StateNotifierProvider((ref) => IntNotifier(0));
+  static final countManager =
+      StateNotifierProvider((ref) => IntNotifier(state: 0));
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +34,13 @@ class MainPage extends StatelessWidget {
             ),
             RaisedButton(
               child: Text('Reset'),
+              textColor: Colors.white,
               color: Theme.of(context).primaryColor,
               onPressed: context.read(countManager).reset,
             ),
             RaisedButton(
               child: Text('Open Drawer'),
+              textColor: Colors.white,
               color: Theme.of(context).primaryColor,
               onPressed: () => scaffoldKey.currentState.openDrawer(),
             ),

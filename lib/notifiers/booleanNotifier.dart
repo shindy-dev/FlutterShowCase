@@ -1,7 +1,6 @@
-import 'package:state_notifier/state_notifier.dart';
+import 'package:showcase/notifiers/_estatenotifier.dart';
 
-class BooleanNotifier extends StateNotifier<bool> {
+class BooleanNotifier extends EStateNotifier<bool> {
   BooleanNotifier({bool state = false}) : super(state);
-  get value => state;
-  void toggle(v) => state = v;
+  void toggle() => state = !state;
 }

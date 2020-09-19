@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:state_notifier/state_notifier.dart';
+import 'package:showcase/notifiers/_estatenotifier.dart';
 
-class ColorNotifier extends StateNotifier<MaterialColor> {
+class MaterialColorNotifier extends EStateNotifier<MaterialColor> {
+  MaterialColorNotifier({MaterialColor state = Colors.blue}) : super(state);
+}
+
+class ColorNotifier extends EStateNotifier<Color> {
   ColorNotifier({Color state = Colors.blue}) : super(state);
-  void changeColor(Color v) => state = v;
 }

@@ -72,6 +72,7 @@ class ShowCaseDrawer extends StatelessWidget {
                   child: IconButton(
                     tooltip: 'Settings',
                     icon: Icon(Icons.settings),
+                    color: Colors.white,
                     onPressed: () {
                       Navigator.pop(context);
                       _transitionNamed(context, '/settings');

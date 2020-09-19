@@ -31,11 +31,11 @@ class SettinsPage extends StatelessWidget {
             child: Switch(
               value: context.read(osDarkProvider.state),
               onChanged: (v) async {
-                context.read(osDarkProvider).toggle(v);
+                context.read(osDarkProvider).setState(v);
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.setBool('osDark', v);
                 if (v) {
-                  context.read(isDarkProvider).toggle(!v);
+                  context.read(isDarkProvider).setState(!v);
                   prefs.setBool('isDark', !v);
                 }
               },
@@ -47,7 +47,7 @@ class SettinsPage extends StatelessWidget {
               value: context.read(isDarkProvider.state),
               onChanged: !context.read(osDarkProvider.state)
                   ? ((v) async {
-                      context.read(isDarkProvider).toggle(v);
+                      context.read(isDarkProvider).setState(v);
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setBool('isDark', v);
@@ -58,6 +58,7 @@ class SettinsPage extends StatelessWidget {
           ListItem(
             title: 'Primary Color',
             child: RaisedButton(
+              textColor: Colors.white,
               color: Theme.of(context).primaryColor,
               child: Text(
                 'Color Picker',
@@ -70,7 +71,7 @@ class SettinsPage extends StatelessWidget {
                     child: BlockPicker(
                         pickerColor: Theme.of(context).primaryColor,
                         onColorChanged: (c) async {
-                          context.read(primaryColorProvider).changeColor(c);
+                          context.read(primaryColorProvider).setState(c);
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           prefs.setInt('primaryColor', c.value);
