@@ -21,74 +21,81 @@ class SettinsPage extends StatelessWidget {
         title: Text(title),
       ),
       drawer: ShowCaseDrawer(),
-      body: ListView(
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.all(16),
-        children: [
-          TextDivider(title: 'Theme'),
-          ListItem(
-            title: 'Match The OS Theme',
-            child: Switch(
-              value: context.read(osDarkProvider.state),
-              onChanged: (v) async {
-                context.read(osDarkProvider).setState(v);
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setBool('osDark', v);
-                if (v) {
-                  context.read(isDarkProvider).setState(!v);
-                  prefs.setBool('isDark', !v);
-                }
-              },
-            ),
-          ),
-          ListItem(
-            title: 'Dark Mode',
-            child: Switch(
-              value: context.read(isDarkProvider.state),
-              onChanged: !context.read(osDarkProvider.state)
-                  ? ((v) async {
-                      context.read(isDarkProvider).setState(v);
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setBool('isDark', v);
-                    })
-                  : null,
-            ),
-          ),
-          ListItem(
-            title: 'Primary Color',
-            child: RaisedButton(
-              textColor: Colors.white,
-              color: Theme.of(context).primaryColor,
-              child: Text(
-                'Color Picker',
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('images/S.png'), fit: BoxFit.contain),
+        ),
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.all(16),
+          children: [
+            TextDivider(title: 'Theme'),
+            ListItem(
+              title: 'Match The OS Theme',
+              child: Switch(
+                value: context.read(osDarkProvider.state),
+                onChanged: (v) async {
+                  context.read(osDarkProvider).setState(v);
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setBool('osDark', v);
+                  if (v) {
+                    context.read(isDarkProvider).setState(!v);
+                    prefs.setBool('isDark', !v);
+                  }
+                },
               ),
-              onPressed: () => showDialog(
-                context: context,
-                child: AlertDialog(
-                  title: const Text('Pick a PrimaryColor'),
-                  content: SingleChildScrollView(
-                    child: BlockPicker(
-                        pickerColor: Theme.of(context).primaryColor,
-                        onColorChanged: (c) async {
-                          context.read(primaryColorProvider).setState(c);
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          prefs.setInt('primaryColor', c.value);
-                        },
-                        availableColors: Colors.primaries),
-                  ),
-                  actions: [
-                    FlatButton(
-                      child: const Text('OK'),
-                      onPressed: () => Navigator.of(context).pop(),
+            ),
+            ListItem(
+              title: 'Dark Mode',
+              child: Switch(
+                value: context.read(isDarkProvider.state),
+                onChanged: !context.read(osDarkProvider.state)
+                    ? ((v) async {
+                        context.read(isDarkProvider).setState(v);
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setBool('isDark', v);
+                      })
+                    : null,
+              ),
+            ),
+            ListItem(
+              title: 'Primary Color',
+              child: RaisedButton(
+                textColor: Colors.white,
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  'Color Picker',
+                ),
+                onPressed: () => showDialog(
+                  context: context,
+                  child: AlertDialog(
+                    title: const Text('Pick a PrimaryColor'),
+                    content: SingleChildScrollView(
+                      child: BlockPicker(
+                          pickerColor: Theme.of(context).primaryColor,
+                          onColorChanged: (c) async {
+                            context.read(primaryColorProvider).setState(c);
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setInt('primaryColor', c.value);
+                          },
+                          availableColors: Colors.primaries),
                     ),
-                  ],
+                    actions: [
+                      FlatButton(
+                        child: const Text('OK'),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

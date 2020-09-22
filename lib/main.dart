@@ -59,6 +59,8 @@ class _ShowCaseConfig extends State<ShowCaseApp> {
         routes: {
           '/': (context) => MainPage(title: _title),
           '/buttons': (context) => ButtonsPage(title: 'Bottuns'),
+          '/picture': (context) => PicturePage(title: 'Picture'),
+          '/slidecards': (context) => SlideCardsPage(title: 'SlideCards'),
           '/settings': (context) => SettinsPage(title: 'Settings')
         },
       ),

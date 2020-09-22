@@ -52,6 +52,20 @@ class ShowCaseDrawer extends StatelessWidget {
                         _transitionNamed(context, '/buttons');
                       },
                     ),
+                    ListTile(
+                      title: Text('Picture'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _transitionNamed(context, '/picture');
+                      },
+                    ),
+                    ListTile(
+                      title: Text('SlideCards'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _transitionNamed(context, '/slidecards');
+                      },
+                    ),
                   ],
                 ),
               ],
